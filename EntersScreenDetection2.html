@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-Strict.dtd">
+<html>
+<head>
+<title>VisibilityWatcher demo #2</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+	body { font-family: Arial, Helvetica; background-color: #C0C0C0; }
+	p#status { padding:10px; background:#F0F0FF; margin-top:20%; }
+	p.explanation { background-color: #FFFFFF; border: 2px dashed black; }
+	div#flyer { position:fixed; top:0px; left:200px; background-color:#F0F0F0; border:2px solid black; height:50px; width:50px; text-align:center; }
+</style>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/mootools/1.2.3/mootools-yui-compressed.js"></script>
+<script type="text/javascript" src="../Source/VisibilityWatcher.js"></script>
+<script type="text/javascript">
+	var bouncer = function(){
+		$('flyer').set('tween', {duration: 5000, transition: Fx.Transitions.Linear, link: 'chain'});
+		$('flyer').tween('top', 1200).tween('top', -120);
+	}
+
+	window.addEvent('domready', function(){
+		bouncer.periodical(12000);
+		bouncer();
+
+		var flyer = $('flyer');
+		flyer.store('visibilityWatcher', 
+			new VisibilityWatcher(flyer, 
+				{
+    				'enteredscreen': function(){ document.id('status').set('html', ':) Hello Buddy !'); },
+		   		'leftscreen': function(){ document.id('status').set('html',':O Hey! Come back !'); }
+				},
+				{ 'poll_interval': 500, 'method': 'poll' }
+			)
+		);
+	});
+</script>
+</head>
+<body>
+<h1>VisibilityWatcher demo #2</h2>
+<p class="explanation">Here's an animated element detection demo.<br/>The smiley in the middle of the screen keeps track of its moving friend.</p>
+<div id="flyer">:)</div>
+<p id="status">Some text you should not see</p>
+</body>
+</html>

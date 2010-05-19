@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-Strict.dtd">
+<html>
+<head>
+<title>VisibilityWatcher demo #2</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+	body { font-family: Arial, Helvetica; background-color: #C0C0C0; }
+	p { padding:10px; background:#F0F0FF; }
+	.explanation { background-color: #FFFFFF; border: 2px dashed black; }
+</style>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/mootools/1.2.3/mootools-yui-compressed.js"></script>
+<script type="text/javascript" src="../Source/VisibilityWatcher.js"></script>
+<script type="text/javascript">
+	var newparagraphnumber = 3;
+
+	window.addEvent('domready', function(){
+		var extender = $('extender');
+		extender.store('visibilityWatcher', 
+				new VisibilityWatcher(extender,
+					{
+  						'enteredscreen': function(){
+							var newcontent = new Element('h2', {html: 'My new little text #' + newparagraphnumber++});
+							newcontent.inject(extender, 'before');
+							newcontent = document.id('textsource').clone(true, false);
+							newcontent.inject(extender, 'before');
+						}
+					}
+				)
+		);
+	});
+</script>
+</head>
+<body>
+<h1>Continuous Load test</h1>
+<p class="explanation">
+	When the document end is reached, a new text paragraph is added automatically.
+</p>
+<h2>My little text #1</h2>
+<p id="textsource">
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<br/> Sed non risus.<br/> Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.<br/> Cras elementum ultrices diam.<br/> Maecenas ligula massa, varius a, semper congue, euismod non, mi.<br/> Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat.<br/> Duis semper.<br/> Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim.<br/> Pellentesque congue.<br/> Ut in risus volutpat libero pharetra tempor.<br/> Cras vestibulum bibendum augue.<br/> Praesent egestas leo in pede.<br/> Praesent blandit odio eu enim.<br/> Pellentesque sed dui ut augue blandit sodales.<br/> Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh.<br/> Mauris ac mauris sed pede pellentesque fermentum.<br/> Maecenas adipiscing ante non diam sodales hendrerit.<br/> Ut velit mauris, egestas sed, gravida nec, ornare ut, mi.<br/> Aenean ut orci vel massa suscipit pulvinar.<br/> Nulla sollicitudin.<br/> Fusce varius, ligula non tempus aliquam, nunc turpis ullamcorper nibh, in tempus sapien eros vitae ligula.<br/> Pellentesque rhoncus nunc et augue.<br/> Integer id felis.<br/> Curabitur aliquet pellentesque diam.<br/> Integer quis metus vitae elit lobortis egestas.<br/> Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<br/> Morbi vel erat non mauris convallis vehicula.<br/> Nulla et sapien.<br/> Integer tortor tellus, aliquam faucibus, convallis id, congue eu, quam.<br/> Mauris ullamcorper felis vitae erat.<br/> Proin feugiat, augue non elementum posuere, metus purus iaculis lectus, et tristique ligula justo vitae magna.<br/> Aliquam convallis sollicitudin purus.<br/> Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus.<br/> Fusce vulputate sem at sapien.<br/> Vivamus leo.<br/> Aliquam euismod libero eu enim.<br/> Nulla nec felis sed leo placerat imperdiet.<br/> Aenean suscipit nulla in justo.<br/> Suspendisse cursus rutrum augue.<br/> Nulla tincidunt tincidunt mi.<br/> Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus.<br/> Curabitur eu amet.<br/>
+</p>
+<h2>My little text #2</h2>
+<p>
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<br/> Sed non risus.<br/> Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.<br/> Cras elementum ultrices diam.<br/> Maecenas ligula massa, varius a, semper congue, euismod non, mi.<br/> Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat.<br/> Duis semper.<br/> Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim.<br/> Pellentesque congue.<br/> Ut in risus volutpat libero pharetra tempor.<br/> Cras vestibulum bibendum augue.<br/> Praesent egestas leo in pede.<br/> Praesent blandit odio eu enim.<br/> Pellentesque sed dui ut augue blandit sodales.<br/> Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh.<br/> Mauris ac mauris sed pede pellentesque fermentum.<br/> Maecenas adipiscing ante non diam sodales hendrerit.<br/> Ut velit mauris, egestas sed, gravida nec, ornare ut, mi.<br/> Aenean ut orci vel massa suscipit pulvinar.<br/> Nulla sollicitudin.<br/> Fusce varius, ligula non tempus aliquam, nunc turpis ullamcorper nibh, in tempus sapien eros vitae ligula.<br/> Pellentesque rhoncus nunc et augue.<br/> Integer id felis.<br/> Curabitur aliquet pellentesque diam.<br/> Integer quis metus vitae elit lobortis egestas.<br/> Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<br/> Morbi vel erat non mauris convallis vehicula.<br/> Nulla et sapien.<br/> Integer tortor tellus, aliquam faucibus, convallis id, congue eu, quam.<br/> Mauris ullamcorper felis vitae erat.<br/> Proin feugiat, augue non elementum posuere, metus purus iaculis lectus, et tristique ligula justo vitae magna.<br/> Aliquam convallis sollicitudin purus.<br/> Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus.<br/> Fusce vulputate sem at sapien.<br/> Vivamus leo.<br/> Aliquam euismod libero eu enim.<br/> Nulla nec felis sed leo placerat imperdiet.<br/> Aenean suscipit nulla in justo.<br/> Suspendisse cursus rutrum augue.<br/> Nulla tincidunt tincidunt mi.<br/> Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus.<br/> Curabitur eu amet.<br/>
+</p>
+<p id="extender">This is the end of the document</p>
+<p>This text is after document's end</p>
+</body>
+</html>

@@ -1,7 +1,7 @@
 VisibilityWatcher
 ===========
 
-![Screenshot](http://VisibilityWatcher.github.com/Capture-1.png)
+![Screenshot](http://fcartegnie.github.com/VisibilityWatcher/Capture-1.png)
 
 How to Use
 ----------

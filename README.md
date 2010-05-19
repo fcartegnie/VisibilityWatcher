@@ -14,7 +14,7 @@ VisibilityWatcher is an event or poll based DOM element visibility detection cla
   		'enteredscreen': function(){
 				alert('Element is on screen');
 		}
-	}
+	});
 
 Events will happen when the element is scrolled in or out of the viewport, and depends on scroll events.
 If you need to detect an element when there's no scroll event (no user action, animated by scripts) you can use the `poll` method.
@@ -24,9 +24,10 @@ If you need to detect an element when there's no scroll event (no user action, a
 	{
   		'enteredscreen': function(){
 				alert('Element is on screen');
-		},
-		{ 'method': 'poll' }
-	}
+		}
+	},
+	{ 'method': 'poll' }
+	);
 
 You can also detect element's position relatively to the viewport.
 
@@ -36,7 +37,7 @@ You can also detect element's position relatively to the viewport.
   		'updatedvisibilitystatus': function(e){
 				alert(e.getVisibility());
 		}
-	}
+	});
 
 Return value `on` of `getVisibility()` has the same meaning as a fired `enteredscreen` event.
 Return values `before` and `after` of `getVisibility()` have the same meaning as a fired `leftscreen` event.

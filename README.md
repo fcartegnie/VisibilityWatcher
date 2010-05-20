@@ -3,10 +3,10 @@ VisibilityWatcher
 
 ![Screenshot](http://fcartegnie.github.com/VisibilityWatcher/Capture-1.png)
 
+VisibilityWatcher is an event or poll based DOM element visibility detection class.
+
 How to Use
 ----------
-
-VisibilityWatcher is an event or poll based DOM element visibility detection class.
 
 	#JS
 	new VisibilityWatcher($('target'),
@@ -35,7 +35,7 @@ You can also detect element's position relatively to the viewport.
 	new VisibilityWatcher($('target'),
 	{
   		'updatedvisibilitystatus': function(e){
-				alert(e.getVisibility());
+				alert('we are ' + e.getVisibility()['x'] + 'element on x-axis and ' + e.getVisibility()['y'] + 'on y-axis');
 		}
 	});
 

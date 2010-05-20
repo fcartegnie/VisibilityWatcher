@@ -30,7 +30,7 @@ VisibilityWatcher Method: constructor {#VisibilityWatcher:constructor}
 
 ### Returns:
 
-	(object) A new VisibilityWatcher instance.
+(object) A new VisibilityWatcher instance.
 
 ### Example: 
 
@@ -40,7 +40,7 @@ VisibilityWatcher Method: constructor {#VisibilityWatcher:constructor}
   			'enteredscreen': function(){ ... },
 	  		'leftscreen': function(){ ... }
 		},
-		{ 'poll_interval': 500, 'method': 'poll' }
+		{ poll_interval: 500, method: 'poll' }
 	);
 	
 VisibilityWatcher Method: startWatching {#VisibilityWatcher:startWatching}
@@ -65,7 +65,7 @@ Stops detection.
 VisibilityWatcher Method: getVisibility {#VisibilityWatcher:getVisibility}
 --------------------------------------------------
 
-Returns target element's last relative position. 
+Returns viewport's position relatively to the target element. 
 
 ### Syntax:
 
@@ -73,6 +73,5 @@ Returns target element's last relative position.
 
 ### Returns:
 
-	(string) 'before', 'on' or 'after', relatively to screen
-
+(*array*) `['x': ., 'y': .]` of (*string*) `before`, `on` or `after`
 

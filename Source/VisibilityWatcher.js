@@ -25,6 +25,7 @@ var VisibilityWatcher = new Class({
 	},
 
 	initialize: function(el, events, options){
+		this.last_state = new Array();
 		this.setOptions(options);
 		this.addEvents(events);
 		this.setTarget(el);
@@ -35,13 +36,18 @@ var VisibilityWatcher = new Class({
 	getVisibility: function(){
 		var elementPosition = this.targetElement.getPosition();
 		var elementSize = this.targetElement.getSize();
-		if ( document.getScroll().y > (elementPosition.y + elementSize.y) )
-			return 'after';
-		else
-		if ( (document.getScroll().y + window.getSize().y) > elementPosition.y )
-			return 'on';
-		else
-			return 'before';
+		var returned_array = new Array();
+
+		['x', 'y'].each( function(el, index){
+			if ( document.getScroll()[el] > (elementPosition[el] + elementSize[el]) )
+				returned_array[el] = 'after';
+			else
+			if ( (document.getScroll()[el] + window.getSize()[el]) > elementPosition[el] )
+				returned_array[el] = 'on';
+			else
+				returned_array[el] = 'before';
+		} );
+		return returned_array;
 	},
 
 	startWatching: function() {
@@ -66,14 +72,14 @@ var VisibilityWatcher = new Class({
 
 	visibilityChangedCheck: function(){
 		var cur_state = this.getVisibility();
-		if ( cur_state != this.last_state )
+		if ( ! ['x', 'y'].every( function(el, index){ return (cur_state[el] == this.last_state[el]); }, this) )
 		{
 			this.last_state = cur_state;
-			if ( cur_state == 'on' )
+			if ( ['x', 'y'].every( function(el, index){ return( cur_state[el] == 'on'); }) )
 				this.fireEvent('enteredscreen');
 			else
 				this.fireEvent('leftscreen');
-			this.fireEvent('updatedvisibilitystatus');
 		}
+		this.fireEvent('updatedvisibilitystatus');
 	}
 });//!Class

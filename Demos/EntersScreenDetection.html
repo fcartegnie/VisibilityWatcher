@@ -4,10 +4,11 @@
 <title>VisibilityWatcher demo #1</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style>
-	body { font-family: Arial, Helvetica; background-color: #C0C0C0; padding-top:50px; }
+	body { font-family: Arial, Helvetica; background-color: #C0C0C0; padding-top:60px; }
 	p { padding:10px; background:#F0F0FF; }
 	div#header5status { position:fixed;top:2px; left:2px; background-color:#F0F0F0; border:2px solid black; }
 	div#header5status2 { position:fixed;top:32px; left:2px; background-color:#F0F0F0; border:2px solid black; }
+	div#headerstatus { position:fixed;top:62px; left:2px; background-color:#F0F0F0; border:2px solid black; }
 	div#header5status2.visible,
 	div#header5status.visible { background-color:#80FF80; }
 	.explanation { background-color: #FFFFFF; border: 2px dashed black; }
@@ -16,37 +17,38 @@
 <script type="text/javascript" src="../Source/VisibilityWatcher.js"></script>
 <script type="text/javascript">
 	window.addEvent('domready', function(){
-		$$('.watched').each(function(el){
-			el.store('visibilityWatcher', 
-					new VisibilityWatcher(el, 
-						{
-    						'enteredscreen': function(){ document.id('header5status').addClass("visible").set('html','paragraph header 5 is visible  (detected by polling)'); },
-			    			'leftscreen': function(){ document.id('header5status').removeClass("visible").set('html','paragraph header 5 is not visible  (detected by polling)'); }
-						},
-						{ 'poll_interval': 500, 'method': 'poll' }
-					)
-			);
-		});
 
-		$$('.watched').each(function(el){
-			el.store('visibilityWatcher2', 
-					new VisibilityWatcher(el, 
-						{
-    						'enteredscreen': function(){ document.id('header5status2').addClass("visible").set('html','paragraph header 5 is visible (detected by event)'); },
-			    			'leftscreen': function(){ document.id('header5status2').removeClass("visible").set('html','paragraph header 5 is not visible  (detected by event)'); }
-						}
-					)
-			);
-		});
+		new VisibilityWatcher('watched', 
+			{
+    			'enteredscreen': function(){ document.id('header5status').addClass("visible").set('html','paragraph header 5 is visible  (detected by polling)'); },
+				'leftscreen': function(){ document.id('header5status').removeClass("visible").set('html','paragraph header 5 is not visible  (detected by polling)'); }
+			},
+			{ 'poll_interval': 500, 'method': 'poll' }
+		);
+
+		new VisibilityWatcher('watched', 
+			{
+				'enteredscreen': function(){ document.id('header5status2').addClass("visible").set('html','paragraph header 5 is visible (detected by event)'); },
+    			'leftscreen': function(){ document.id('header5status2').removeClass("visible").set('html','paragraph header 5 is not visible  (detected by event)'); }
+			}
+		);
+
+		new VisibilityWatcher($$('h2'), /* multiple detection */
+			{
+				'enteredscreen': function(el){ document.id('headerstatus').set('html','paragraph header ' + el.get('html') + ' is visible (multiple detection)'); }
+			}
+		);
+
 	});
 </script>
 </head>
 <body>
-<div id="header5status">Current position (polled)</div><div id="header5status2">Current position (event)</div>
+<div id="header5status">Current position (polled)</div><div id="header5status2">Current position (event)</div><div id="headerstatus"></div>
 <h1>VisibilityWatcher demo #1</h1>
 <p class="explanation">
 	Here's visibility detection demo using both event and polling methods.<br/>
-	When the paragraph header #5 is scrolled into screen, its status will turn green.
+	When the paragraph header #5 is scrolled into screen, its status will turn green.<br/>
+	Multiple elements detection is also done on each paragraph header.
 </p>
 <h2>My little text #1</h2>
 <p>
@@ -64,7 +66,7 @@ Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<br/> Sed non risus.<br
 <p>
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<br/> Sed non risus.<br/> Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.<br/> Cras elementum ultrices diam.<br/> Maecenas ligula massa, varius a, semper congue, euismod non, mi.<br/> Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat.<br/> Duis semper.<br/> Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim.<br/> Pellentesque congue.<br/> Ut in risus volutpat libero pharetra tempor.<br/> Cras vestibulum bibendum augue.<br/> Praesent egestas leo in pede.<br/> Praesent blandit odio eu enim.<br/> Pellentesque sed dui ut augue blandit sodales.<br/> Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh.<br/> Mauris ac mauris sed pede pellentesque fermentum.<br/> Maecenas adipiscing ante non diam sodales hendrerit.<br/> Ut velit mauris, egestas sed, gravida nec, ornare ut, mi.<br/> Aenean ut orci vel massa suscipit pulvinar.<br/> Nulla sollicitudin.<br/> Fusce varius, ligula non tempus aliquam, nunc turpis ullamcorper nibh, in tempus sapien eros vitae ligula.<br/> Pellentesque rhoncus nunc et augue.<br/> Integer id felis.<br/> Curabitur aliquet pellentesque diam.<br/> Integer quis metus vitae elit lobortis egestas.<br/> Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<br/> Morbi vel erat non mauris convallis vehicula.<br/> Nulla et sapien.<br/> Integer tortor tellus, aliquam faucibus, convallis id, congue eu, quam.<br/> Mauris ullamcorper felis vitae erat.<br/> Proin feugiat, augue non elementum posuere, metus purus iaculis lectus, et tristique ligula justo vitae magna.<br/> Aliquam convallis sollicitudin purus.<br/> Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus.<br/> Fusce vulputate sem at sapien.<br/> Vivamus leo.<br/> Aliquam euismod libero eu enim.<br/> Nulla nec felis sed leo placerat imperdiet.<br/> Aenean suscipit nulla in justo.<br/> Suspendisse cursus rutrum augue.<br/> Nulla tincidunt tincidunt mi.<br/> Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus.<br/> Curabitur eu amet.<br/>
 </p>
-<h2 class="watched">My little text #5</h2>
+<h2 id="watched">My little text #5</h2>
 <p>
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<br/> Sed non risus.<br/> Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.<br/> Cras elementum ultrices diam.<br/> Maecenas ligula massa, varius a, semper congue, euismod non, mi.<br/> Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat.<br/> Duis semper.<br/> Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim.<br/> Pellentesque congue.<br/> Ut in risus volutpat libero pharetra tempor.<br/> Cras vestibulum bibendum augue.<br/> Praesent egestas leo in pede.<br/> Praesent blandit odio eu enim.<br/> Pellentesque sed dui ut augue blandit sodales.<br/> Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh.<br/> Mauris ac mauris sed pede pellentesque fermentum.<br/> Maecenas adipiscing ante non diam sodales hendrerit.<br/> Ut velit mauris, egestas sed, gravida nec, ornare ut, mi.<br/> Aenean ut orci vel massa suscipit pulvinar.<br/> Nulla sollicitudin.<br/> Fusce varius, ligula non tempus aliquam, nunc turpis ullamcorper nibh, in tempus sapien eros vitae ligula.<br/> Pellentesque rhoncus nunc et augue.<br/> Integer id felis.<br/> Curabitur aliquet pellentesque diam.<br/> Integer quis metus vitae elit lobortis egestas.<br/> Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<br/> Morbi vel erat non mauris convallis vehicula.<br/> Nulla et sapien.<br/> Integer tortor tellus, aliquam faucibus, convallis id, congue eu, quam.<br/> Mauris ullamcorper felis vitae erat.<br/> Proin feugiat, augue non elementum posuere, metus purus iaculis lectus, et tristique ligula justo vitae magna.<br/> Aliquam convallis sollicitudin purus.<br/> Praesent aliquam, enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl eu lectus.<br/> Fusce vulputate sem at sapien.<br/> Vivamus leo.<br/> Aliquam euismod libero eu enim.<br/> Nulla nec felis sed leo placerat imperdiet.<br/> Aenean suscipit nulla in justo.<br/> Suspendisse cursus rutrum augue.<br/> Nulla tincidunt tincidunt mi.<br/> Curabitur iaculis, lorem vel rhoncus faucibus, felis magna fermentum augue, et ultricies lacus lorem varius purus.<br/> Curabitur eu amet.<br/>
 </p>

@@ -25,17 +25,20 @@ var VisibilityWatcher = new Class({
 	},
 
 	initialize: function(el, events, options){
-		this.last_state = new Array();
+		this.targetElements = new Array();
 		this.setOptions(options);
 		this.addEvents(events);
-		this.setTarget(el);
+		this.add(el);
 		this.visibilityChangedCheck();
 		this.startWatching();
 	},
 
-	getVisibility: function(){
-		var elementPosition = this.targetElement.getPosition();
-		var elementSize = this.targetElement.getSize();
+	getVisibility: function(targetElement){
+		if ( targetElement == 'undefined' )
+			targetElement = this.targetElements[0].element;
+
+		var elementPosition = targetElement.getPosition();
+		var elementSize = targetElement.getSize();
 		var returned_array = new Array();
 
 		['x', 'y'].each( function(el, index){
@@ -57,6 +60,7 @@ var VisibilityWatcher = new Class({
 		} else {
 			document.id(this.options['event_source']).addEvent('scroll', this.visibilityChangedCheck.bind(this));
 		}
+		return this;
 	},
 
 	stopWatching: function() {
@@ -66,20 +70,30 @@ var VisibilityWatcher = new Class({
 		} else {
 			document.id(this.options['event_source']).removeEvent('scroll', this.visibilityChangedCheck.bind(this));
 		}
+		return this;
 	},
 
-	setTarget: function(targetElement){ this.targetElement = targetElement; },
+	add: function(targetElement){
+		$splat( targetElement ).each( function(el, index){
+			this.targetElements.push( {'element': document.id( el ), 'last_state': new Array()} );
+		}.bind(this) );
+		return this;
+	},
 
 	visibilityChangedCheck: function(){
-		var cur_state = this.getVisibility();
-		if ( ! ['x', 'y'].every( function(el, index){ return (cur_state[el] == this.last_state[el]); }, this) )
-		{
-			this.last_state = cur_state;
-			if ( ['x', 'y'].every( function(el, index){ return( cur_state[el] == 'on'); }) )
-				this.fireEvent('enteredscreen');
-			else
-				this.fireEvent('leftscreen');
-		}
+		this.targetElements.each( function(targetElement, index){
+			var cur_state = this.getVisibility( targetElement.element );
+			if ( ! ['x', 'y'].every( function(axis, index){ return (cur_state[axis] == targetElement.last_state[axis]); }, this) )
+			{
+				targetElement.last_state = cur_state;
+				if ( ['x', 'y'].every( function(axis, index){ return( cur_state[axis] == 'on'); }) )
+					this.fireEvent('enteredscreen', targetElement.element);
+				else
+					this.fireEvent('leftscreen', targetElement.element);
+			}
+		}.bind(this) );
+
 		this.fireEvent('updatedvisibilitystatus');
+		return this;
 	}
 });//!Class

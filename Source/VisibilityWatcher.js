@@ -71,6 +71,7 @@ var VisibilityWatcher = new Class({
 			this.interval_id = $clear(this.interval_id);
 		} else {
 			document.id(this.options.event_source).removeEvent('scroll', this.visibilityChangedCheck.bind(this));
+			if (this.gratuitouscheck_id) $clear(this.gratuitouscheck_id);
 		}
 		return this;
 	},

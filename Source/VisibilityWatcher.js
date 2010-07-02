@@ -22,6 +22,7 @@ var VisibilityWatcher = new Class({
 		poll_interval: 2000,
 		method: 'event', /* poll or scroll event based */
 		delay: 0, /* Delay before considering the event as stable */
+		delta_px: 0, /* Extend the detection area by delta_px pixels */
 		event_source: window /* scrollable element */
 	},
 
@@ -43,14 +44,14 @@ var VisibilityWatcher = new Class({
 		var returned_array = new Array();
 
 		['x', 'y'].each( function(el, index){
-			if ( document.getScroll()[el] > (elementPosition[el] + elementSize[el]) )
+			if ( document.getScroll()[el] > (elementPosition[el] + elementSize[el] + this.options.delta_px) )
 				returned_array[el] = 'after';
 			else
-			if ( (document.getScroll()[el] + window.getSize()[el]) > elementPosition[el] )
+			if ( (document.getScroll()[el] + window.getSize()[el]) > (elementPosition[el] - this.options.delta_px) )
 				returned_array[el] = 'on';
 			else
 				returned_array[el] = 'before';
-		} );
+		}, this);
 		return returned_array;
 	},
 

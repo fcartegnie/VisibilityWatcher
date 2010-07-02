@@ -28,6 +28,7 @@ VisibilityWatcher Method: constructor {#VisibilityWatcher:constructor}
 * poll_interval - (*integer*, defaults to `2000`) Polling interval (in milliseconds) when doing poll based detection.
 * event_source - (*element*, defaults to `window`) Source for scrolling events. Must be a scrollable element.
 * delay - (*integer*, defaults to 0) Observation delay (in milliseconds) before triggering a stable event.
+* delta_px - (*integer*, defaults to 0) Detection range increase (in pixels).
 
 ### Returns:
 

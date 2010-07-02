@@ -81,6 +81,11 @@ var VisibilityWatcher = new Class({
 		return this;
 	},
 
+	prepareAndFireEvent: function(eventName, element)
+	{
+		this.fireEvent(eventName, element);
+	},
+
 	visibilityChangedCheck: function(){
 		var currentTime = $time();
 		this.targetElements.each( function(targetElement, index){
@@ -92,16 +97,16 @@ var VisibilityWatcher = new Class({
 				{
 					targetElement.last_state = cur_state;
 					if ( ['x', 'y'].every( function(axis, index){ return( cur_state[axis] == 'on'); }) )
-						this.fireEvent('enteredscreen', targetElement.element);
+						this.prepareAndFireEvent('enteredscreen', targetElement.element);
 					else
-						this.fireEvent('leftscreen', targetElement.element);
+						this.prepareAndFireEvent('leftscreen', targetElement.element);
 				}
 			} else {
 				targetElement.last_state.erase('started');
 			}
 		}.bind(this) );
 
-		this.fireEvent('updatedvisibilitystatus');
+		this.prepareAndFireEvent('updatedvisibilitystatus');
 		return this;
 	}
 });//!Class

@@ -81,6 +81,14 @@ var VisibilityWatcher = new Class({
 		return this;
 	},
 
+	remove: function(targetElement){
+		targetElement = document.id(targetElement);
+		this.targetElements = this.targetElements.filter(function(el){
+			return ( targetElement != el['element'] );
+		});
+		return this;
+	},
+
 	prepareAndFireEvent: function(eventName, element)
 	{
 		this.fireEvent(eventName, element);

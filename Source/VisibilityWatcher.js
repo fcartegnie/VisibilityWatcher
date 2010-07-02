@@ -55,21 +55,21 @@ var VisibilityWatcher = new Class({
 	},
 
 	startWatching: function() {
-		if ( this.options['method'] == 'poll' )
+		if ( this.options.method == 'poll' )
 		{
-			this.interval_id = this.visibilityChangedCheck.periodical(this.options['poll_interval'], this);
+			this.interval_id = this.visibilityChangedCheck.periodical(this.options.poll_interval, this);
 		} else {
-			document.id(this.options['event_source']).addEvent('scroll', this.visibilityChangedCheck.bind(this));
+			document.id(this.options.event_source).addEvent('scroll', this.visibilityChangedCheck.bind(this));
 		}
 		return this;
 	},
 
 	stopWatching: function() {
-		if ( this.options['method'] == 'poll' )
+		if ( this.options.method == 'poll' )
 		{
 			this.interval_id = $clear(this.interval_id);
 		} else {
-			document.id(this.options['event_source']).removeEvent('scroll', this.visibilityChangedCheck.bind(this));
+			document.id(this.options.event_source).removeEvent('scroll', this.visibilityChangedCheck.bind(this));
 		}
 		return this;
 	},
@@ -93,7 +93,7 @@ var VisibilityWatcher = new Class({
 			if ( ! ['x', 'y'].every( function(axis, index){ return (cur_state[axis] == targetElement.last_state[axis]); }, this) )
 			{
 				if (!targetElement.last_state['started']) targetElement.last_state['started'] = currentTime;
-				if (this.options['method'] != 'poll' || (currentTime - targetElement.last_state['started']) > this.options.delay)
+				if (this.options.method != 'poll' || (currentTime - targetElement.last_state['started']) > this.options.delay)
 				{
 					targetElement.last_state = cur_state;
 					if ( ['x', 'y'].every( function(axis, index){ return( cur_state[axis] == 'on'); }) )

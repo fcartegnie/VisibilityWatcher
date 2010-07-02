@@ -21,6 +21,7 @@ var VisibilityWatcher = new Class({
 	options: {
 		poll_interval: 2000,
 		method: 'event', /* poll or scroll event based */
+		delay: 0, /* Delay before considering the event as stable */
 		event_source: window /* scrollable element */
 	},
 
@@ -81,15 +82,22 @@ var VisibilityWatcher = new Class({
 	},
 
 	visibilityChangedCheck: function(){
+		var currentTime = $time();
 		this.targetElements.each( function(targetElement, index){
 			var cur_state = this.getVisibility( targetElement.element );
 			if ( ! ['x', 'y'].every( function(axis, index){ return (cur_state[axis] == targetElement.last_state[axis]); }, this) )
 			{
-				targetElement.last_state = cur_state;
-				if ( ['x', 'y'].every( function(axis, index){ return( cur_state[axis] == 'on'); }) )
-					this.fireEvent('enteredscreen', targetElement.element);
-				else
-					this.fireEvent('leftscreen', targetElement.element);
+				if (!targetElement.last_state['started']) targetElement.last_state['started'] = currentTime;
+				if (this.options['method'] != 'poll' || (currentTime - targetElement.last_state['started']) > this.options.delay)
+				{
+					targetElement.last_state = cur_state;
+					if ( ['x', 'y'].every( function(axis, index){ return( cur_state[axis] == 'on'); }) )
+						this.fireEvent('enteredscreen', targetElement.element);
+					else
+						this.fireEvent('leftscreen', targetElement.element);
+				}
+			} else {
+				targetElement.last_state.erase('started');
 			}
 		}.bind(this) );
 

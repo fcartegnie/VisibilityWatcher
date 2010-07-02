@@ -93,13 +93,19 @@ var VisibilityWatcher = new Class({
 			if ( ! ['x', 'y'].every( function(axis, index){ return (cur_state[axis] == targetElement.last_state[axis]); }, this) )
 			{
 				if (!targetElement.last_state['started']) targetElement.last_state['started'] = currentTime;
-				if (this.options.method != 'poll' || (currentTime - targetElement.last_state['started']) > this.options.delay)
+				if ((currentTime - targetElement.last_state['started']) > this.options.delay)
 				{
 					targetElement.last_state = cur_state;
 					if ( ['x', 'y'].every( function(axis, index){ return( cur_state[axis] == 'on'); }) )
 						this.prepareAndFireEvent('enteredscreen', targetElement.element);
 					else
 						this.prepareAndFireEvent('leftscreen', targetElement.element);
+				} else {
+					if (this.options.delay>0 && this.options.method == 'event')
+					{	/*Force an additional check if events have stopped*/
+						if (this.gratuitouscheck_id) $clear(this.gratuitouscheck_id);
+						this.gratuitouscheck_id = this.visibilityChangedCheck.delay(this.options.delay+1, this);
+					}
 				}
 			} else {
 				targetElement.last_state.erase('started');

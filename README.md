@@ -29,6 +29,18 @@ If you need to detect an element when there's no scroll event (no user action, a
 	{ 'method': 'poll' }
 	);
 
+You can also discard 'fast scrolling' events by only triggering the event when the element stays in the same state for more than the specified 'delay' value.
+
+	#JS
+	new VisibilityWatcher($$('.watched'),
+	{
+  		'enteredscreen': function(el){
+				alert('Element ' + el.id + 'is on screen');
+		}
+	},
+	{ 'delay': 2000 } /* Only trigger event if the element is on screen for more than 2 seconds */
+	);
+
 You can also detect element's position relatively to the viewport.
 
 	#JS

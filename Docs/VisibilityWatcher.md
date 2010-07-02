@@ -27,6 +27,7 @@ VisibilityWatcher Method: constructor {#VisibilityWatcher:constructor}
 * method - (*string*, defaults to 'event')  Detection method. Values are `poll` or `event`.
 * poll_interval - (*integer*, defaults to `2000`) Polling interval (in milliseconds) when doing poll based detection.
 * event_source - (*element*, defaults to `window`) Source for scrolling events. Must be a scrollable element.
+* delay - (*integer*, defaults to 0) Observation delay (in milliseconds) before triggering a stable event.
 
 ### Returns:
 
@@ -85,6 +86,20 @@ Add one or more elements to the watched elements list.
 	VisibilityWatcher.add('target2');
 
 	VisibilityWatcher.add($$('img')).add($$('.watched'));
+
+### Returns:
+
+VisibilityWatcher instance
+
+
+VisibilityWatcher Method: remove {#VisibilityWatcher:remove}
+--------------------------------------------------
+
+Remove one element from watched elements list. 
+
+### Arguments:
+
+1. target - (single, *element* or *id*) the watched element.
 
 ### Returns:
 

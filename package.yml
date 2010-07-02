@@ -1,6 +1,7 @@
 name: VisibilityWatcher
 author: fcartegnie
 category: Utilities
+current: 1.3.1
 tags: [element, event, detection, scroll]
 demo: http://fcartegnie.github.com/VisibilityWatcher/
 docs: http://github.com/fcartegnie/VisibilityWatcher/blob/master/Docs/VisibilityWatcher.md 
